@@ -16,7 +16,7 @@ public class SecurityConfig {
                 http
                         .authorizeRequests()
                         .antMatchers("/").permitAll()
-                        .antMatchers("/private/info").authenticated()
+                        .antMatchers("/private/info", "/private/external").authenticated()
                         .anyRequest().denyAll()
                         .and()
                         .logout().logoutSuccessUrl("/")
