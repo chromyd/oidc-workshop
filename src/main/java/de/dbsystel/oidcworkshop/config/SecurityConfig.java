@@ -19,6 +19,8 @@ public class SecurityConfig {
                         .antMatchers("/private/info").authenticated()
                         .anyRequest().denyAll()
                         .and()
+                        .logout().logoutSuccessUrl("/")
+                        .and()
                         .oauth2Login();
             }
         };

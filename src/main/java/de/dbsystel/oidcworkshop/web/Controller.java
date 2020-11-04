@@ -13,7 +13,8 @@ public class Controller {
 
     @GetMapping("/")
     public ResponseEntity<String> landingPage() {
-        String html = "<a href='/private/info'>show token info</a>";
+        String html = "<a href='/private/info'>show token info</a>" +
+                "<br><a href='/logout'>logout</a>";
         return ResponseEntity.ok(html);
     }
 
@@ -24,5 +25,4 @@ public class Controller {
         String tokenValue = authorizedClient.getAccessToken().getTokenValue();
         return ResponseEntity.ok(new UserInfo(userName, expiration, tokenValue));
     }
-
 }
