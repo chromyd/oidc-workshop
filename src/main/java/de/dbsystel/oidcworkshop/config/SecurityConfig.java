@@ -17,6 +17,8 @@ public class SecurityConfig {
                         .authorizeRequests()
                         .antMatchers("/").permitAll()
                         .antMatchers("/private/info", "/private/external").authenticated()
+                        .antMatchers("/private/only-with-role").hasRole("GAU-BKUV-EMM_MOBILE-INTRANET")
+                        .antMatchers("/private/only-with-another-role").hasRole("ANOTHER_ROLE")
                         .anyRequest().denyAll()
                         .and()
                         .logout().logoutSuccessUrl("/")

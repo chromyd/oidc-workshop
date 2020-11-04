@@ -22,6 +22,8 @@ public class Controller {
     public ResponseEntity<String> landingPage() {
         String html = "<a href='/private/info'>show token info</a>" +
                 "<br><a href='/private/external'>call external service</a>" +
+                "<br><a href='/private/only-with-role'>only with role</a>" +
+                "<br><a href='/private/only-with-another-role'>only with another role</a>" +
                 "<br><a href='/logout'>logout</a>";
         return ResponseEntity.ok(html);
     }
@@ -42,4 +44,15 @@ public class Controller {
                 .bodyToMono(String.class).block();
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/private/only-with-role")
+    ResponseEntity<String> onlyWithRole() {
+        return ResponseEntity.ok("ok you have the role!");
+    }
+
+    @GetMapping("/private/only-with-another-role")
+    ResponseEntity<String> onlyWithAnotherRole() {
+        return ResponseEntity.ok("ok you have another role!");
+    }
+
 }
