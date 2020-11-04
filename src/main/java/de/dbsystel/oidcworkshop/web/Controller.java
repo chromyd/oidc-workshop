@@ -6,6 +6,7 @@ import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2Aut
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.Instant;
 
@@ -37,12 +38,12 @@ public class Controller {
     }
 
     @GetMapping("/private/external")
-    ResponseEntity<String> external() {
+    ResponseEntity<ResultExtern> external() {
         String response = webClient
                 .get()
                 .exchange().block()
                 .bodyToMono(String.class).block();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ResultExtern(response));
     }
 
     @GetMapping("/private/only-with-role")
@@ -53,6 +54,11 @@ public class Controller {
     @GetMapping("/private/only-with-another-role")
     ResponseEntity<String> onlyWithAnotherRole() {
         return ResponseEntity.ok("ok you have another role!");
+    }
+
+    @GetMapping("/private/login")
+    ModelAndView login() {
+        return new ModelAndView("redirect:http://localhost:4200");
     }
 
 }
