@@ -1,0 +1,19 @@
+---
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          dbwebsso:
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
+            provider: dbwebsso
+            scope: openid
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+        provider:
+          dbwebsso:
+            authorization-uri: https://sso.test.service.deutschebahn.com/f5-oauth2/v1/authorize
+            token-uri: https://sso.test.service.deutschebahn.com/f5-oauth2/v1/token
+            user-info-uri: https://sso.test.service.deutschebahn.com/f5-oauth2/v1/introspect
+            jwk-set-uri: https://sso.test.service.deutschebahn.com/f5-oauth2/v1/jwks
