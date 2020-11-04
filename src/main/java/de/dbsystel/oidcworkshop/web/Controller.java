@@ -1,8 +1,12 @@
 package de.dbsystel.oidcworkshop.web;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.Instant;
 
 @RestController
 public class Controller {
@@ -14,8 +18,11 @@ public class Controller {
     }
 
     @GetMapping("/private/info")
-    public ResponseEntity<String> info() {
-        return ResponseEntity.ok("userinfo");
+    public ResponseEntity<UserInfo> info(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
+        String userName = authorizedClient.getPrincipalName();
+        Instant expiration = authorizedClient.getAccessToken().getExpiresAt();
+        String tokenValue = authorizedClient.getAccessToken().getTokenValue();
+        return ResponseEntity.ok(new UserInfo(userName, expiration, tokenValue));
     }
 
 }
