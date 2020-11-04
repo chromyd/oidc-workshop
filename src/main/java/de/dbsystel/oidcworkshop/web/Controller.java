@@ -12,6 +12,12 @@ import java.time.Instant;
 @RestController
 public class Controller {
 
+    private WebClient webClient;
+
+    public Controller(WebClient webClient) {
+        this.webClient = webClient;
+    }
+
     @GetMapping("/")
     public ResponseEntity<String> landingPage() {
         String html = "<a href='/private/info'>show token info</a>" +
@@ -29,12 +35,9 @@ public class Controller {
     }
 
     @GetMapping("/private/external")
-    public ResponseEntity<String> external(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
-        String externalUrl = "https://gateway.hub.db.de/bizhub-api-secured-with-jwt";
-        WebClient webClient = WebClient.create(externalUrl);
+    ResponseEntity<String> external() {
         String response = webClient
                 .get()
-                .headers(h -> h.setBearerAuth(authorizedClient.getAccessToken().getTokenValue()))
                 .exchange().block()
                 .bodyToMono(String.class).block();
         return ResponseEntity.ok(response);
